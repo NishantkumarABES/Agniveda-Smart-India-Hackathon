@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 import gtts
 import playsound
+import uvicorn
 from bot_python import answerMe, createIndex
 
 count = 0
@@ -51,10 +52,6 @@ def get_chat_response(text):
     response_text = str(answerMe(text))
     return response_text
 
-
-
-
-
 #createIndex('Knowledge')
 # speak("something")
-app.run(debug=True)
+uvicorn.run(app, host="0.0.0.0", port=8000)
