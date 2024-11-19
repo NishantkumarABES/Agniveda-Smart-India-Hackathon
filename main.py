@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 # import gtts
 # import playsound
-import uvicorn
+import gunicorn
 
 count = 0
 
@@ -52,4 +52,7 @@ def get_chat_response(text):
 
 #createIndex('Knowledge')
 # speak("something")
-uvicorn.run(app, host="0.0.0.0", port=8000)
+
+if __name__ == "__main__":
+    gunicorn.run(app, host="0.0.0.0", port=8000)
+
