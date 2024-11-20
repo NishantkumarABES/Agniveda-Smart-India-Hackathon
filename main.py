@@ -1,16 +1,21 @@
 from flask import Flask, redirect, url_for, render_template, request
-# import gtts
-# import playsound
+from gtts import gTTS
+import pygame
 import gunicorn
+import io
 
 count = 0
 
 def speak(text):
-    global count
-    sound = gtts.gTTS(str(text), lang="hi")
-    sound.save("welcome" + str(count) + ".mp3")
-    playsound.playsound("welcome" + str(count) + ".mp3")
-    count = count + 1
+    sound = gTTS(text=text, lang='hi')
+    audio_data = io.BytesIO()
+    sound.write_to_fp(audio_data)
+    audio_data.seek(0)  
+    pygame.mixer.init()
+    pygame.mixer.music.load(audio_data)
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        continue
 
 
 app = Flask(__name__, template_folder="template", static_folder="static")
@@ -50,9 +55,7 @@ def get_chat_response(text):
     response_text = str(answerMe(text))
     return response_text
 
-#createIndex('Knowledge')
-# speak("something")
-
 if __name__ == "__main__":
-    gunicorn.run(app, host="0.0.0.0", port=8000)
+    app.run(debug=True)
+    # gunicorn.run(app, host="0.0.0.0", port=8000)
 
