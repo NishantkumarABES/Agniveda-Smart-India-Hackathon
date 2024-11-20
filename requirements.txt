@@ -1,2 +1,4 @@
 gunicorn==23.0.0
 flask==3.0.3
+pygame==2.6.1
+gtts==2.5.4
