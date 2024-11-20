@@ -56,6 +56,6 @@ def get_chat_response(text):
     return response_text
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    # gunicorn.run(app, host="0.0.0.0", port=8000)
+    # app.run(debug=True)
+    gunicorn.run(app, host="0.0.0.0", port=8000)
 
